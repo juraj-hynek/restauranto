@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Text } from 'react-native-paper';
-import { View, Button } from 'react-native';
+import { View, Button, Image, ScrollView, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,7 +7,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //
 import BuildSectionList from './build-section-lists';
-
+import PageDetailStockItem from "./build_pages/detail-stock-item";
+import PageDetailSupplier from "./build_pages/detail-supplier";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -34,19 +34,10 @@ function NotificationsScreenDrawer({ navigation }) {
 }
 
 
-
-function DetailsScreen() {
-  return (
-    <View style={{}}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
-function MainPage({navigation}) {
+function MainPage({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <BuildSectionList  navigation={navigation}/>
+      <BuildSectionList navigation={navigation} />
     </View>
   );
 }
@@ -60,21 +51,21 @@ function HomeScreen() {
 
     >
       <Stack.Screen name="MainPage" component={MainPage} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen name="Details" component={PageDetailStockItem} />
     </Stack.Navigator>
   );
 }
 
 function StockScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>StockScreen!</Text>
+    <View style={{ flex: 1,  }}>
+      <PageDetailSupplier />
     </View>
   );
 }
 function InventoryScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1,  }}>
       <Text>InventoryScreen!</Text>
     </View>
   );
@@ -90,7 +81,7 @@ function BuildBottomNav() {
       <Tab.Screen options={{
         headerShown: false,
       }} name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="StockScreen" component={StockScreen} />
+      <Tab.Screen name="Supplier details" component={PageDetailSupplier} />
       <Tab.Screen name="InventoryScreen" component={InventoryScreen} />
     </Tab.Navigator>
 
