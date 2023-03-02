@@ -4,6 +4,7 @@ import { View, TextInput, StyleSheet, Button, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { VStack, Text } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
+import { StackView } from "./stack.view";
 
 function FormAddItemToListIngrediences({
   addFoodIngredienceToList,
@@ -44,14 +45,7 @@ function FormAddItemToListIngrediences({
         <Spacer />
         <Button title="Add" onPress={addFoodIngredienceToList} />
       </HStack>
-      <View
-        style={[
-          styles.hstack,
-          {
-            borderWidth: 2,
-          },
-        ]}
-      >
+      <StackView horizontal bWidth={1} bc="#ccc" p="10" br={5}>
         <TextInput
           onChangeText={(inputValue) => handleNameChange("name", inputValue)}
           ref={input1Ref}
@@ -83,7 +77,7 @@ function FormAddItemToListIngrediences({
           style={styles.input}
           returnKeyType="done"
         />
-      </View>
+      </StackView>
     </>
   );
 }
@@ -115,6 +109,34 @@ function ListOfFoodIngrediences({ listIngrediences, handleDeleteItemFromIng }) {
     </VStack>
   );
 }
+
+const alertActionView = ({
+  title = "N/A",
+  subtitle = "N/A",
+  leftTex = "N/A",
+  rightText = "N/A",
+  leftCallback = () => null,
+  rightCallback = () => null,
+  cancelable = false,
+  leftStyle = "cancel",
+}) => {
+  Alert.alert(
+    title,
+    subtitle,
+    [
+      {
+        text: leftTex,
+        onPress: leftCallback,
+        style: leftStyle,
+      },
+      {
+        text: rightText,
+        onPress: rightCallback,
+      },
+    ],
+    { cancelable: cancelable }
+  );
+};
 
 const MenuForm = () => {
   const [foodId, setFoodId] = useState("");
@@ -168,22 +190,15 @@ const MenuForm = () => {
 
   const handleSubmit = () => {
     if (!foodId || !foodName || !foodPrice) {
-      Alert.alert(
-        "Empty Food form cannot be submited",
-        "Enter food id, name and cost",
-        [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel",
-          },
-          {
-            text: "Confirm",
-            onPress: () => {},
-          },
-        ],
-        { cancelable: false }
-      );
+      alertActionView({
+        title: "Empty Food form cannot be submited",
+        subtitle: "Enter food id, name and cost",
+        leftStyle: "cancel",
+        leftCallback: () => null,
+        rightCallback: () => null,
+        rightText: "Confirm",
+        leftTex: "Cancel",
+      });
     }
 
     console.log(
@@ -193,26 +208,19 @@ const MenuForm = () => {
   };
 
   const handleDeleteItemFromIng = (index) => {
-    Alert.alert(
-      "Confirmation",
-      "Are you sure you want to delete item?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        {
-          text: "Confirm",
-          onPress: () => {
-            const copy = [...listIngrediences];
-            copy.splice(index, 1);
-            setListIngrediences(copy);
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    alertActionView({
+      title: "Confirmation",
+      subtitle: "Are you sure you want to delete item?",
+      leftStyle: "cancel",
+      leftCallback: () => null,
+      rightCallback: () => {
+        const copy = [...listIngrediences];
+        copy.splice(index, 1);
+        setListIngrediences(copy);
+      },
+      rightText: "Confirm",
+      leftTex: "Cancel",
+    });
   };
 
   const addFoodIngredienceToList = () => {
@@ -331,15 +339,6 @@ const styles = StyleSheet.create({
   },
   spacer: {
     flex: 1,
-  },
-  hstack: {
-    flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginVertical: 5,
   },
   inputContainer: {
     flexDirection: "row",
