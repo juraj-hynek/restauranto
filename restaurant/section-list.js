@@ -396,26 +396,12 @@ const TablesView = ({ header, footer, data = [], renderItem }) => {
 const SectionListWithFixedHeader = ({ screenRole = "" }) => {
 
   const [stickyHeaderHeight, setStickyHeaderHeight] = useState(0);
+
+  const handleItemLongPress = (itemId) => {
+    console.log('Item long pressed:', itemId);
+  };
   // const [tables, setTables] = useState(tables);
 
-  // if screenRole is waiter then customize ui
-  // if screenRole is chef then customize ui
-
-  // useEffect(() => {
-  //   fetch("http://192.168.150.127:5000/api/tables-customers-orders")
-  //     .then((response) => {
-  //       if(!response.ok){
-  //         throw new Error('error from server');
-  //       }
-  //       else {
-  //         return response
-  //       }
-  //     })
-  //     .then((dataTables)=>{
-  //       console.log("dataTables", dataTables)
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
 
   const renderSectionHeader = ({ section }) => (
     <HStack style={styles.sectionHeader}>
@@ -481,12 +467,13 @@ const SectionListWithFixedHeader = ({ screenRole = "" }) => {
     );
   };
 
-  const renderSection = ({ section }) => (
+  const renderSection = ({ section, onLongPress }) => (
     <VStack p="2" style={styles.section}>
       {/* <Text>{JSON.stringify(section, null, 2)}</Text> */}
       <TablesView
         data={section.data}
         renderItem={({ item }) => (
+      
           <VStack pr="0" mb={"11"} borderColor="coolGray.200" borderWidth="0">
             <VStack>
               <TablesView
@@ -531,6 +518,7 @@ const SectionListWithFixedHeader = ({ screenRole = "" }) => {
                 data={item.orders}
                 renderItem={({ item: oderItem }) => {
                   return (
+                    <TouchableOpacity onLongPress={() => handleItemLongPress(item.id)}>
                     <VStack mb="28" borderWidth={1} borderColor="#ccc">
                       <HStack borderBottomColor={"#ccc"} borderBottomWidth="1">
                         <Text> Order accepted, in progress, wait 7 min</Text>
@@ -656,17 +644,21 @@ const SectionListWithFixedHeader = ({ screenRole = "" }) => {
                         )}
                       </VStack>
                     </VStack>
+                    </TouchableOpacity>
                   );
                 }}
               />
             </VStack>
           </VStack>
+    
         )}
       />
 
       {/* {renderSectionFooter({ section })} */}
     </VStack>
   );
+
+  
 
   return (
     <View style={styles.container}>

@@ -40,7 +40,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Headline, Body, Title1, Title2, Title3, Footnote, Callout, Caption2, Caption1 } from "./ui-ios-style/texts";
 // import { VStack, HStack,  Spacer, Form, ForEach, Section, } from "./ui-ios-style/index"
 import AccordionList from './restaurant';
-
+import MenuForm from "./restaurant/menu-form";
 
 
 const Drawer = createDrawerNavigator();
@@ -53,7 +53,7 @@ function BuildMainStack() {
         headerShown: false,
       }}
     >
-      <StackNavigation.Screen name="MainPage" component={SectionListWithFixedHeader} />
+      <StackNavigation.Screen name="MainPage" component={MenuForm} />
       {/* <StackNavigation.Screen name="MainPage" rende component={(props) => <PageGeneral pageName="MainPage" {...props} />} /> */}
       <StackNavigation.Screen
         name="Details" component={PageGeneral} />
