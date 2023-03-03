@@ -42,6 +42,7 @@ import { Headline, Body, Title1, Title2, Title3, Footnote, Callout, Caption2, Ca
 import AccordionList from './restaurant';
 import MenuForm from "./restaurant/menu-form";
 import ListOrdersChef from "./restaurant/list-order-chef";
+import ListSuppliers from "./restaurant/list-supplier";
 
 const Drawer = createDrawerNavigator();
 const StackNavigation = createStackNavigator();
@@ -53,7 +54,7 @@ function BuildMainStack() {
         headerShown: false,
       }}
     >
-      <StackNavigation.Screen name="MainPage" component={ListOrdersChef} />
+      <StackNavigation.Screen name="MainPage" component={ListSuppliers} />
       {/* <StackNavigation.Screen name="MainPage" rende component={(props) => <PageGeneral pageName="MainPage" {...props} />} /> */}
       <StackNavigation.Screen
         name="Details" component={PageGeneral} />
