@@ -46,17 +46,22 @@ for (let i = 1; i <= 50; i++) {
 
 const RenderItemFunc = ({ item }) => {
   const [open, setOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(false);
   return (
     <VStack>
       <HStack
         justifyContent={"space-between"}
+        alignItems="center"
         borderWidth={1}
         p="0"
         borderColor="#ccc"
         mb="4"
       >
         <Button
-          onPress={() => setOpen(!open)}
+          onPress={() => {
+            setListOpen(false);
+            setOpen(!open);
+          }}
           mr="2"
           variant="outline"
           leftIcon={<Icon as={Ionicons} name="menu" size="sm" />}
@@ -64,10 +69,36 @@ const RenderItemFunc = ({ item }) => {
         <Text style={{}}>{item.name}</Text>
         <Spacer></Spacer>
         <Button
+          onPress={() => {
+            setOpen(false);
+            setListOpen(!listOpen);
+          }}
           variant="outline"
-          leftIcon={<Icon as={Ionicons} name="trash" size="sm" />}
+          leftIcon={<Icon as={Ionicons} name="list" size="sm" />}
         />
       </HStack>
+
+      {listOpen ? (
+        <VStack ml="8" p="2" mb="4">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+            return (
+              <HStack
+                borderColor={"#ccc"}
+                borderWidth={1}
+                justifyContent={"space-between"}
+              >
+                <Text key={index}>Stock item #{item} </Text>
+                <Spacer />
+                <Button
+                  onPress={() => {}}
+                  variant="outline"
+                  leftIcon={<Icon as={Ionicons} name="trash" size="sm" />}
+                />
+              </HStack>
+            );
+          })}
+        </VStack>
+      ) : null}
 
       {open ? (
         <View>
@@ -99,18 +130,18 @@ const RenderItemFunc = ({ item }) => {
           })}
         </View>
       ) : null}
+      <HStack></HStack>
     </VStack>
   );
 };
 
 export default function ListSuppliers() {
   return (
-    <View>
-      <HStack>
-        <Button>Revert</Button>
-        <Spacer></Spacer>
-        <Button>Save</Button>
-      </HStack>
+    <View
+      style={{
+        backgroundColor: "#fff",
+      }}
+    >
       <FlatList
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => <RenderItemFunc item={item} />}

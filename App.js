@@ -22,30 +22,44 @@ import {
   Modal,
   Alert,
 } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { NativeBaseProvider } from "native-base";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import { Input, Divider, HamburgerIcon, CheckIcon, Select, Button, Menu, Square, AspectRatio, Center, Heading, NativeBaseProvider, Box, Stack, HStack, VStack, Spacer, Avatar, Text, IconButton, Icon } from "native-base";
-
-import BuildSearchDropDown from './build_ui/build_search_dropdown';
-import PageGeneral from './AppGeneralPage';
+// import PageGeneral from "./AppGeneralPage";
 // import BuildSearchDropDown from './build_ui/build_search_dropdown';
-import SectionListWithFixedHeader from './restaurant/section-list';
+// import SectionListWithFixedHeader from "./restaurant/section-list";
 
-import BuildOrderForm from './ui/ui.orderform';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Headline, Body, Title1, Title2, Title3, Footnote, Callout, Caption2, Caption1 } from "./ui-ios-style/texts";
-// import { VStack, HStack,  Spacer, Form, ForEach, Section, } from "./ui-ios-style/index"
-import AccordionList from './restaurant';
+// import BuildOrderForm from "./ui/ui.orderform";
+// import { ScrollView } from "react-native-gesture-handler";
+
+// // import { VStack, HStack,  Spacer, Form, ForEach, Section, } from "./ui-ios-style/index"
+// import AccordionList from "./restaurant";
 import MenuForm from "./restaurant/menu-form";
 import ListOrdersChef from "./restaurant/list-order-chef";
 import ListSuppliers from "./restaurant/list-supplier";
+import FormStock from "./management-stock/data.stock";
+
+// import HomePageScrollTab from "./restaurant/home.page.tabs";
+
+// pages
+import TablesPage from "./restaurant/pages-food-order/page-tables";
+import TableCustomers from "./restaurant/pages-food-order/page-customers";
+import TableCustomerOrder from "./restaurant/pages-food-order/page-orders";
+import TableFoodSearch from "./restaurant/pages-food-order/page-food-search";
+
+//
+import ListWithSearching from "./restaurant/list-search";
 
 const Drawer = createDrawerNavigator();
 const StackNavigation = createStackNavigator();
+
+// CTX
+import AppContext from "./restaurant/pages-food-order/context";
 
 function BuildMainStack() {
   return (
@@ -54,10 +68,19 @@ function BuildMainStack() {
         headerShown: false,
       }}
     >
-      <StackNavigation.Screen name="MainPage" component={ListSuppliers} />
-      {/* <StackNavigation.Screen name="MainPage" rende component={(props) => <PageGeneral pageName="MainPage" {...props} />} /> */}
+      <StackNavigation.Screen name="Tables" component={TablesPage} />
       <StackNavigation.Screen
-        name="Details" component={PageGeneral} />
+        name="TableCustomers"
+        component={TableCustomers}
+      />
+      <StackNavigation.Screen
+        name="TableCustomerOrder"
+        component={TableCustomerOrder}
+      />
+      <StackNavigation.Screen
+        name="TableFoodSearch"
+        component={TableFoodSearch}
+      />
     </StackNavigation.Navigator>
   );
 }
@@ -66,63 +89,90 @@ const Tab = createBottomTabNavigator();
 
 function BuildBottomNav() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen options={{
-        headerShown: false,
-      }} name="HomePage" component={BuildMainStack} />
-      <Tab.Screen name="StockTable" component={PageGeneral} />
-      {/* <Tab.Screen name="StockForm" component={PageGeneral} />
-      <Tab.Screen name="InventoryForm" component={PageGeneral} />
-      <Tab.Screen name="InventoryTable" component={PageGeneral} />
-      <Tab.Screen name="SupplierForm" component={PageGeneral} />
-      <Tab.Screen name="SupplierTable" component={PageGeneral} /> */}
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "HomePage") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "AddMenuItem") {
+            iconName = focused ? "settings" : "settings-outline";
+          } else if (route.name === "ListSuppliers") {
+            iconName = focused ? "ios-business" : "ios-business-outline";
+          } else if (route.name === "ChefPage") {
+            iconName = focused ? "ios-restaurant" : "ios-restaurant-outline";
+          } else if (route.name === "ListWithSearching") {
+            iconName = focused ? "search" : "search-outline";
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="HomePage"
+        component={BuildMainStack}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="AddMenuItem"
+        component={MenuForm}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="ChefPage"
+        component={ListOrdersChef}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="ListSuppliers"
+        component={ListSuppliers}
+      />
+      <Tab.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="ListWithSearching"
+        component={ListWithSearching}
+      />
     </Tab.Navigator>
   );
 }
 
 export default function App() {
-  return <NativeBaseProvider>
-    <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen options={{
-              headerShown: false,
-            }} name="Home" component={BuildBottomNav} />
-            <Drawer.Screen name="Detail" component={PageGeneral} />
-          </Drawer.Navigator>
-        </NavigationContainer> 
-  </NativeBaseProvider>
-  }
-
-
-// export default function App() {
-
-//   const [value, setValue] = React.useState("");
-//   const [list, setList] = React.useState([1]);
-
-//   const handlesetList = () => {
-//     setList((prev) => ([...prev, ""]))
-//   }
-
-//   useEffect(() => {
-//     handlesetList()
-//   }, [value]);
-
-//   return <View style={{
-//     flex: 1,
-//     marginTop: 40
-//   }}>
-//     {list.map((item, index) => {
-//       return <TextInput key={index}
-//         // value={value} causing loosing focus on enter field
-//         defaultValue={value}
-//         placeholder='Juraj'
-//         onChangeText={(textVal) => setValue(textVal)}
-//         style={{
-//           padding: 16,
-//           borderWidth: 1
-//         }} />
-//     })}
-//   </View>
-
-//   // return <BuildSearchDropDown ></BuildSearchDropDown>
-// }
+  return (
+    <SafeAreaView
+      style={{
+        flex:1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <AppContext>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            <Drawer.Navigator initialRouteName="Home">
+              <Drawer.Screen
+                options={{
+                  headerShown: false,
+                }}
+                name="Home"
+                component={BuildBottomNav}
+              />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </AppContext>
+    </SafeAreaView>
+  );
+}

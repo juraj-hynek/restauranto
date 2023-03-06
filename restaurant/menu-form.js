@@ -244,7 +244,7 @@ const MenuForm = () => {
     console.log("no item form");
   };
   useEffect(() => {
-    input1Ref.current.focus();
+    // input1Ref.current.focus();
   }, []);
 
   return (
@@ -356,6 +356,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    padding: 8
   },
   deleteIcon: {
     marginLeft: 10,
