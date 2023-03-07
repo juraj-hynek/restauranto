@@ -1,10 +1,11 @@
-import {
+import React, {
   createContext,
   useState,
   useContext,
   useEffect,
   useReducer,
 } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { tables } from "./data-config";
 import { listMenuFlatten } from "./data-food-menu";
 
@@ -28,6 +29,7 @@ const tablesReducer = (state, action) => {
         booked: false,
         timeOfReservation: null,
         needCleaning: false,
+        tableStatus: "free",
       };
       const newTables = [...state.tables, newTable];
       return { ...state, tables: newTables };
@@ -188,7 +190,10 @@ const tablesReducer = (state, action) => {
     }
 
     default:
-      return state;
+      return {
+        ...state,
+        table: payload.data,
+      };
   }
 };
 
@@ -198,12 +203,53 @@ export const ContextCreate = createContext({
   menu: [],
 });
 
+const saveData = async (state) => {
+  try {
+    await AsyncStorage.setItem("@MyAppContext", JSON.stringify(state));
+  } catch (e) {
+    // saving error
+  }
+};
+
+const loadData = async (setState) => {
+  try {
+    const jsonValue = await AsyncStorage.getItem("@MyAppContext");
+    if (jsonValue !== null) {
+      setState({
+        type: "",
+        payload: {
+          data: JSON.parse(jsonValue),
+        },
+      });
+    }
+  } catch (e) {
+    // error reading value
+  }
+};
+
 const AppContext = (props) => {
   const [state, dispatch] = useReducer(tablesReducer, initialState);
 
+  const deleteStorage = async (key) => {
+    try {
+      await AsyncStorage.removeItem("@MyAppContext");
+    } catch (e) {
+      // error removing item
+    }
+  };
   useEffect(() => {
-    console.log("state", JSON.stringify(state.tables, null, 2));
+    // loadData(dispatchHandler);
+  }, []);
+
+  useEffect(() => {
+    // saveData(state);
   }, [state]);
+
+  // useEffect(()=>{
+  //   setTimeout(()=>{
+  //     deleteStorage()
+  //   }, 2000)
+  // },[])
 
   return (
     <ContextCreate.Provider value={[state, dispatch]}>

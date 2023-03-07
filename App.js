@@ -29,6 +29,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import QRCode from 'react-native-qrcode-svg';
+
 
 // import PageGeneral from "./AppGeneralPage";
 // import BuildSearchDropDown from './build_ui/build_search_dropdown';
@@ -54,6 +56,7 @@ import TableFoodSearch from "./restaurant/pages-food-order/page-food-search";
 
 //
 import ListWithSearching from "./restaurant/list-search";
+import ListFoodFullDb, {ListFoodFullDbDetail} from "./restaurant/page-food-list";
 
 const Drawer = createDrawerNavigator();
 const StackNavigation = createStackNavigator();
@@ -61,11 +64,30 @@ const StackNavigation = createStackNavigator();
 // CTX
 import AppContext from "./restaurant/pages-food-order/context";
 
+
+const myObject = {
+  price: 10.99,
+  item: 'My Item',
+  webUrl: 'www.google.com',
+};
+
+
+const MyQRCode = () => {
+  const myObjectString = JSON.stringify(myObject);
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <QRCode value={myObjectString} />
+    </View>
+  );
+};
+
 function BuildMainStack() {
   return (
     <StackNavigation.Navigator
       options={{
         headerShown: false,
+        
       }}
     >
       <StackNavigation.Screen name="Tables" component={TablesPage} />
@@ -80,6 +102,18 @@ function BuildMainStack() {
       <StackNavigation.Screen
         name="TableFoodSearch"
         component={TableFoodSearch}
+      />
+       <StackNavigation.Screen
+         options={{
+          headerShown: false,
+          
+        }}
+        name="ListFoodFullDbDetail"
+        component={ListFoodFullDbDetail}
+      />
+         <StackNavigation.Screen
+        name="AddMenuItem"
+        component={MenuForm}
       />
     </StackNavigation.Navigator>
   );
@@ -96,7 +130,7 @@ function BuildBottomNav() {
 
           if (route.name === "HomePage") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "AddMenuItem") {
+          } else if (route.name === "ListFood") {
             iconName = focused ? "settings" : "settings-outline";
           } else if (route.name === "ListSuppliers") {
             iconName = focused ? "ios-business" : "ios-business-outline";
@@ -122,26 +156,26 @@ function BuildBottomNav() {
         options={{
           headerShown: false,
         }}
-        name="AddMenuItem"
-        component={MenuForm}
+        name="ListFood"
+        component={ListFoodFullDb}
       />
       <Tab.Screen
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
         name="ChefPage"
         component={ListOrdersChef}
       />
       <Tab.Screen
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
         name="ListSuppliers"
         component={ListSuppliers}
       />
       <Tab.Screen
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
         name="ListWithSearching"
         component={ListWithSearching}
@@ -154,8 +188,9 @@ export default function App() {
   return (
     <SafeAreaView
       style={{
-        flex:1,
+        flex: 1,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        backgroundColor: "#fff",
       }}
     >
       <AppContext>

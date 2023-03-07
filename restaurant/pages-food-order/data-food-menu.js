@@ -1,4 +1,3 @@
-
 // const data = [
 //     { id: 1, name: "Pizza", category: "Italian", price: 10.99 },
 //     { id: 2, name: "Burgers", category: "American", price: 8.99 },
@@ -28,135 +27,161 @@
 //     { id: 26, name: "Cosmopolitan", category: "American", price: 11.99 },
 //     { id: 27, name: "Gin and Tonic", category: "British", price: 6.99 },
 //   ];
-  
-  export const menuItaliano = [
-    {
-      sezione: "Antipasti",
-      piatti: [
+
+export const menuItaliano = [
+  {
+    sezione: "Antipasti",
+    piatti: [
+      {
+        nome: "Carpaccio di manzo con rucola e parmigiano",
+        prezzo: 12.5,
+      },
+      {
+        nome: "Insalata di mare con polipo, gamberi e calamari",
+        prezzo: 15.0,
+      },
+      {
+        nome: "Prosciutto crudo con melone",
+        prezzo: 10.0,
+      },
+      {
+        nome: "Caprese con pomodori, mozzarella e basilico",
+        prezzo: 8.5,
+      },
+      {
+        nome: "Focaccia al rosmarino con olio d'oliva",
+        prezzo: 5.0,
+      },
+    ],
+  },
+  {
+    sezione: "Primi",
+    piatti: [
+      {
+        nome: "Risotto alla milanese",
+        prezzo: 14.0,
+      },
+      {
+        nome: "Lasagne alla bolognese",
+        prezzo: 16.0,
+      },
+      {
+        nome: "Gnocchi alla sorrentina",
+        prezzo: 12.5,
+      },
+      {
+        nome: "Spaghetti alle vongole",
+        prezzo: 15.0,
+      },
+      {
+        nome: "Penne all'arrabbiata",
+        prezzo: 11.0,
+      },
+    ],
+  },
+  {
+    sezione: "Secondi",
+    piatti: [
+      {
+        nome: "Saltimbocca alla romana con prosciutto e salvia",
+        prezzo: 20.0,
+      },
+      {
+        nome: "Pollo alla cacciatora",
+        prezzo: 16.5,
+      },
+      {
+        nome: "Osso buco alla milanese",
+        prezzo: 22.0,
+      },
+      {
+        nome: "Branzino al forno con patate",
+        prezzo: 24.0,
+      },
+      {
+        nome: "Scaloppine di vitello al limone",
+        prezzo: 18.0,
+      },
+    ],
+  },
+  {
+    sezione: "Dolci",
+    piatti: [
+      {
+        nome: "Panna cotta con frutti di bosco",
+        prezzo: 7.5,
+      },
+      {
+        nome: "Cannoli siciliani con ricotta e cioccolato",
+        prezzo: 5.0,
+      },
+      {
+        nome: "Torta della nonna con crema pasticcera e pinoli",
+        prezzo: 6.0,
+      },
+      {
+        nome: "Tiramisù al cioccolato",
+        prezzo: 8.0,
+      },
+      {
+        nome: "Gelato alla crema con scaglie di cioccolato",
+        prezzo: 4.5,
+      },
+    ],
+  },
+  {
+    sezione: "Bevande analcoliche",
+    piatti: [
+      {
+        nome: "Limonata",
+        prezzo: 3.0,
+      },
+      {
+        nome: "Aranciata",
+        prezzo: 3.0,
+      },
+      {
+        nome: "Chinotto",
+        prezzo: 3.0,
+      },
+    ],
+  },
+];
+
+export const listMenuFlatten = menuItaliano
+  .reduce((accum, next) => {
+    return [...accum, ...next.piatti];
+  }, [])
+  .map((item, index) => {
+    return {
+      name: item.nome,
+      price: item.prezzo,
+      id: index + 1,
+      ingredients: [
         {
-          nome: "Carpaccio di manzo con rucola e parmigiano",
-          prezzo: 12.5,
+          id: null,
+          name: "Ing 1",
+          qty: 1,
+          cost: 2,
         },
         {
-          nome: "Insalata di mare con polipo, gamberi e calamari",
-          prezzo: 15.0,
+          id: null,
+          name: "Ing 2",
+          qty: 1,
+          cost: 2,
         },
         {
-          nome: "Prosciutto crudo con melone",
-          prezzo: 10.0,
+          id: null,
+          name: "Ing 3",
+          qty: 1,
+          cost: 2,
         },
         {
-          nome: "Caprese con pomodori, mozzarella e basilico",
-          prezzo: 8.5,
-        },
-        {
-          nome: "Focaccia al rosmarino con olio d'oliva",
-          prezzo: 5.0,
+          id: null,
+          name: "Ing 4",
+          qty: 1,
+          cost: 2,
         },
       ],
-    },
-    {
-      sezione: "Primi",
-      piatti: [
-        {
-          nome: "Risotto alla milanese",
-          prezzo: 14.0,
-        },
-        {
-          nome: "Lasagne alla bolognese",
-          prezzo: 16.0,
-        },
-        {
-          nome: "Gnocchi alla sorrentina",
-          prezzo: 12.5,
-        },
-        {
-          nome: "Spaghetti alle vongole",
-          prezzo: 15.0,
-        },
-        {
-          nome: "Penne all'arrabbiata",
-          prezzo: 11.0,
-        },
-      ],
-    },
-    {
-      sezione: "Secondi",
-      piatti: [
-        {
-          nome: "Saltimbocca alla romana con prosciutto e salvia",
-          prezzo: 20.0,
-        },
-        {
-          nome: "Pollo alla cacciatora",
-          prezzo: 16.5,
-        },
-        {
-          nome: "Osso buco alla milanese",
-          prezzo: 22.0,
-        },
-        {
-          nome: "Branzino al forno con patate",
-          prezzo: 24.0,
-        },
-        {
-          nome: "Scaloppine di vitello al limone",
-          prezzo: 18.0,
-        },
-      ],
-    },
-    {
-      sezione: "Dolci",
-      piatti: [
-        {
-          nome: "Panna cotta con frutti di bosco",
-          prezzo: 7.5,
-        },
-        {
-          nome: "Cannoli siciliani con ricotta e cioccolato",
-          prezzo: 5.0,
-        },
-        {
-          nome: "Torta della nonna con crema pasticcera e pinoli",
-          prezzo: 6.0,
-        },
-        {
-          nome: "Tiramisù al cioccolato",
-          prezzo: 8.0,
-        },
-        {
-          nome: "Gelato alla crema con scaglie di cioccolato",
-          prezzo: 4.5,
-        },
-      ],
-    },
-    {
-      sezione: "Bevande analcoliche",
-      piatti: [
-        {
-          nome: "Limonata",
-          prezzo: 3.0,
-        },
-        {
-          nome: "Aranciata",
-          prezzo: 3.0,
-        },
-        {
-          nome: "Chinotto",
-          prezzo: 3.0,
-        },
-      ],
-    },
-  ];
-  
-  export const listMenuFlatten = menuItaliano
-    .reduce((accum, next) => {
-      return [...accum, ...next.piatti];
-    }, [])
-    .map((item, index) => {
-      return {
-        name: item.nome,
-        price: item.prezzo,
-        id: index + 1,
-      };
-    });
+    };
+  });

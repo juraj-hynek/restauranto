@@ -42,9 +42,52 @@ import {
   IconButton,
   Icon,
   Progress,
+  Actionsheet,
+  useDisclose,
 } from "native-base";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAppContext } from "./context";
+
+function TableAction({}) {
+  const { isOpen, onOpen, onClose } = useDisclose();
+
+  const handleAction = () => {
+    setAppState({
+      type: "REMOVE_TABLE",
+      payload: {
+        index: tableIndex,
+      },
+    });
+  };
+
+  return (
+    <>
+      <Button flex onPress={onOpen}>
+        Action
+      </Button>
+      <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content>
+          <HStack px={4} justifyContent="center">
+            <Text
+              fontSize="16"
+              color="gray.500"
+              _dark={{
+                color: "gray.300",
+              }}
+            >
+              Table actions
+            </Text>
+          </HStack>
+
+          <Actionsheet.Item>Remove Customer</Actionsheet.Item>
+          <Actionsheet.Item>Customer wants to pay</Actionsheet.Item>
+          {/* <Actionsheet.Item isDisabled>Share</Actionsheet.Item> */}
+          <Actionsheet.Item></Actionsheet.Item>
+        </Actionsheet.Content>
+      </Actionsheet>
+    </>
+  );
+}
 
 const useParallelFetch = () => {
   const [data, setData] = useState([]);
@@ -103,58 +146,37 @@ function TableListItem({
   setAppState,
 }) {
   return (
-    <VStack mb="8" style={{}}>
-      <Pressable
-        key={customerIndex}
-        onPress={() =>
-          handleNavigate({
-            customer,
-            tableIndex,
-            customerIndex,
-          })
-        }
+    <Pressable
+      onPress={() =>
+        handleNavigate({
+          customer,
+          tableIndex: tableIndex,
+          customerIndex: customerIndex,
+        })
+      }
+    >
+      <VStack
+        style={{
+          width: Dimensions.get("window").width / 3 - 1,
+          height: Dimensions.get("window").width / 3,
+          backgroundColor: "#fb923c",
+          borderWidth: 1,
+          borderColor: "#fff",
+        }}
       >
-        <VStack
-          style={{
-            width: "100%",
-            backgroundColor: "#fb923c",
-          }}
-        >
-          <Text>{customer.name}</Text>
-          <Text>{customer.bill}</Text>
-        </VStack>
-      </Pressable>
-      <HStack>
-        <Button
-          onPress={() =>
-            setAppState({
-              type: "REMOVE_CUSTOMER",
-              payload: {
-                tableIndex,
-                customerIndex,
-              },
-            })
-          }
-          flex
-          variant="outline"
-          leftIcon={<Icon as={Ionicons} name="trash" size="sm" />}
-        />
-        <Button
-          flex
-          variant="outline"
-          leftIcon={<Icon as={Ionicons} name="add" size="sm" />}
-        >
-          add item
-        </Button>
-        <Button
-          flex
-          variant="outline"
-          leftIcon={<Icon as={Ionicons} name="add" size="sm" />}
-        >
-          Pay the bill
-        </Button>
-      </HStack>
-    </VStack>
+        <Text>{customer.name}</Text>
+
+        <Spacer />
+        <HStack>
+          <TableAction table={customer} setAppState={setAppState} />
+          {/* <Spacer />
+      <Button
+        variant="outline"
+        leftIcon={<Icon as={Ionicons} name="trash" size="sm" />}
+      /> */}
+        </HStack>
+      </VStack>
+    </Pressable>
   );
 }
 
@@ -226,7 +248,7 @@ const TableCustomers = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       <TableListHeader setAppState={setAppState} tableIndex={tableIndex} />
-      <VStack p="1">
+      <VStack flexDirection="row" flexWrap="wrap">
         {appState.tables[tableIndex].customers.map(
           (customer, customerIndex) => {
             return (

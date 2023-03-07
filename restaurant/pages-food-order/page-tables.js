@@ -121,8 +121,11 @@ function TableListItem({ setAppState, tableIndex, handleNavigate, table }) {
       }
     >
       <VStack
+        borderRadius="11"
+        m="1"
+        p="2"
         style={{
-          width: Dimensions.get("window").width / 3 - 1,
+          width:( Dimensions.get("window").width / 2) - 9,
           // height: Dimensions.get("window").width / 3,
           backgroundColor: (() => {
             if (table.customers.length > 0) {
@@ -241,6 +244,7 @@ const TablesPage = ({}) => {
     modalContainer: {
       flex: 1,
       marginTop: 44,
+      backgroundColor: '#fff'
     },
     modalHeader: {
       flexDirection: "row",
@@ -255,7 +259,9 @@ const TablesPage = ({}) => {
     },
   });
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={{
+      backgroundColor: '#fff'
+    }} style={styles.container}>
       <TableListHeader setAppState={setAppState} />
       <VStack flexDirection="row" flexWrap="wrap">
         {appState.tables.map((table, tableIndex) => {
