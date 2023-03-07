@@ -44,7 +44,7 @@ import QRCode from 'react-native-qrcode-svg';
 import MenuForm from "./restaurant/menu-form";
 import ListOrdersChef from "./restaurant/list-order-chef";
 import ListSuppliers from "./restaurant/list-supplier";
-import FormStock from "./management-stock/data.stock";
+import FormAddStockItem from "./restaurant/page-stock";
 
 // import HomePageScrollTab from "./restaurant/home.page.tabs";
 
@@ -90,7 +90,7 @@ function BuildMainStack() {
         
       }}
     >
-      <StackNavigation.Screen name="Tables" component={TablesPage} />
+      <StackNavigation.Screen name="Tables" component={FormAddStockItem} />
       <StackNavigation.Screen
         name="TableCustomers"
         component={TableCustomers}
