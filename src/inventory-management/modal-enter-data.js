@@ -47,6 +47,7 @@ import {
 } from "native-base";
 
 const ModalInventoryForm = () => {
+
     const [showModal, setShowModal] = useState(false);
     return <Center>
         <Button onPress={() => setShowModal(true)}>Button</Button>

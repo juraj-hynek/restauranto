@@ -221,17 +221,6 @@ const uiDescriptionForm = [
   },
 ];
 
-const stockDb = {
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-  "": {},
-};
 
 function FormStock() {
   const [formValues, setFormValues] = useState({});

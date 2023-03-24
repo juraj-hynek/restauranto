@@ -25,6 +25,7 @@
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
     "expo": "~47.0.9",
+    "expo-barcode-scanner": "~12.1.0",
     "expo-checkbox": "~2.2.2",
     "expo-status-bar": "~1.4.2",
     "native-base": "^3.4.25",
@@ -44,7 +45,8 @@
     "react-native-svg": "13.4.0",
     "react-native-ui-kitten": "^4.4.1",
     "react-native-uuid": "^2.0.1",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "realm": "^11.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

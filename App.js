@@ -32,30 +32,32 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import QRCode from 'react-native-qrcode-svg';
 
 
-import MenuForm from "./src/restaurant/menu-form";
-import ListOrdersChef from "./src/restaurant/list-order-chef";
-import ListSuppliers from "./src/restaurant/list-supplier";
-import FormAddStockItem from "./src/restaurant/page-stock";
+// import MenuForm from "./src/restaurant/menu-form";
+// import ListOrdersChef from "./src/restaurant/list-order-chef";
+// import ListSuppliers from "./src/restaurant/list-supplier";
+// import FormAddStockItem from "./src/restaurant/page-stock";
 
-// import HomePageScrollTab from "./restaurant/home.page.tabs";
+// // import HomePageScrollTab from "./restaurant/home.page.tabs";
 
-// pages
-import TablesPage from "./src/restaurant/pages-food-order/page-tables";
-import TableCustomers from "./src/restaurant/pages-food-order/page-customers";
-import TableCustomerOrder from "./src/restaurant/pages-food-order/page-orders";
-import TableFoodSearch from "./src/restaurant/pages-food-order/page-food-search";
-import PageCustomerSearchOrder from "./src/restaurant/page-customer-search-order";
-import PageSelectStorage , {PageStorageWithItems} from "./src/inventory-management/page-select-storage";
+// // pages
+// import TablesPage from "./src/restaurant/pages-food-order/page-tables";
+// import TableCustomers from "./src/restaurant/pages-food-order/page-customers";
+// import TableCustomerOrder from "./src/restaurant/pages-food-order/page-orders";
+// import TableFoodSearch from "./src/restaurant/pages-food-order/page-food-search";
+// import PageCustomerSearchOrder from "./src/restaurant/page-customer-search-order";
 
-//
-import ListWithSearching from "./src/restaurant/list-search";
-import ListFoodFullDb, {ListFoodFullDbDetail} from "./src/restaurant/page-food-list";
+// //
+// import ListWithSearching from "./src/restaurant/list-search";
+// import ListFoodFullDb, {ListFoodFullDbDetail} from "./src/restaurant/page-food-list";
 import AppContext from "./src/restaurant/pages-food-order/context";
 
 const Drawer = createDrawerNavigator();
 const StackNavigation = createStackNavigator();
 
 // CTX
+
+
+import Invenoty from "./app/inventory";
 
 
 
@@ -77,13 +79,13 @@ function BuildMainStack() {
         
       }}
     >
-      <StackNavigation.Screen name="PageCustomerSearchOrder" component={PageSelectStorage} />
-      <StackNavigation.Screen name="PageStorageWithItems" component={PageStorageWithItems} />
+      {/* <StackNavigation.Screen name="PageCustomerSearchOrder" component={PageSelectStorage} /> */}
+      <StackNavigation.Screen name="PageStorageWithItems" component={Invenoty} />
       <StackNavigation.Screen
         name="TableCustomers"
         component={TableCustomers}
       />
-      <StackNavigation.Screen
+      {/* <StackNavigation.Screen
         name="TableCustomerOrder"
         component={TableCustomerOrder}
       />
@@ -102,7 +104,7 @@ function BuildMainStack() {
          <StackNavigation.Screen
         name="AddMenuItem"
         component={MenuForm}
-      />
+      /> */}
     </StackNavigation.Navigator>
   );
 }
@@ -140,7 +142,7 @@ function BuildBottomNav() {
         name="HomePage"
         component={BuildMainStack}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         options={{
           headerShown: false,
         }}
@@ -167,7 +169,7 @@ function BuildBottomNav() {
         }}
         name="ListWithSearching"
         component={ListWithSearching}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
